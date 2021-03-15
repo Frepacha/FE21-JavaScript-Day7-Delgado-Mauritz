@@ -1,0 +1,3 @@
+/**
+ * JavaScricpt Shopping Cart
+ */
