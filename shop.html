@@ -116,12 +116,33 @@
 
     <script>
         function documentReady() {
-
+            // the add to cart Buttons
             let insertBtns = document.getElementsByClassName('product-button');
             for (let i = 0; i < insertBtns.length; i++) {
                 let insertBtn = insertBtns[i];
                 insertBtn.addEventListener("click", addItem);
             }
+            // the + buttons in the cart
+            let plusBtns = document.getElementsByClassName('plus');
+            for  (let i = 0; i < plusBtns.length; i++) {
+                let plusBtn = plusBtns[i];
+                plusBtn.addEventListener("click", plusQtt);
+            } 
+            // the - buttons in the cart
+            let minusBtns = document.getElementsByClassName('minus');
+            for (let i = 0; i < minusBtns.length; i++) {
+            let  minusBtn = minusBtns[i];
+            minusBtn.addEventListener("click", minusQtt);
+            }
+            // the delete button in the cart
+            let delItemBtns = document.getElementsByClassName('del');
+            for (let i = 0; i < delItemBtns.length; i++) {
+            let  delBtn = delItemBtns[i];
+            delBtn.addEventListener("click", delItem);
+            }
+            //the purchase button in the cart
+            let btnPurchase = document.getElementById("btn-purchase");
+            btnPurchase.addEventListener("click", purchase);
         }
         documentReady();
 
@@ -188,11 +209,48 @@
                 total += (price * qtt);
                 console.log(total);
             }
-            total = total.toFixed(3); //toFixed() will help rounding the number to 2 decimals
+            total = total.toFixed(2); //toFixed() will help rounding the number to 2 decimals
             let totalElement = document.getElementById("total").querySelector('#price');
             console.log(total);
             totalElement.innerHTML = "€" + total;
         }
+
+        function plusQtt(p) {
+        let itemPlus = p.target.parentElement;
+        let qtt = Number(itemPlus.querySelector('.cart-quantity').innerHTML);
+        itemPlus.querySelector('.cart-quantity').innerHTML = qtt + 1;
+        console.log(qtt);
+        updateTotal();
+        }
+
+        function minusQtt(m) {
+        let itemMinus = m.target.parentElement;
+        let qtt = Number(itemMinus.querySelector('.cart-quantity').innerHTML);
+        if (qtt == 1) {
+            console.log("There shouldn't be 0 products in the cart");
+            delItem(m);
+        } else {
+            itemMinus.querySelector('.cart-quantity').innerHTML = qtt - 1;
+            console.log(qtt);
+            updateTotal();
+            }
+            }
+
+            function delItem(d) {
+            let delBtnAction = d.target.parentElement.parentElement.remove();  
+            updateTotal();
+            }
+
+            function purchase() {
+            alert("Thank you for buying with us.");
+            let cartItems = document.getElementById('cart-items');
+            console.log(cartItems);
+                while (cartItems.hasChildNodes()) {
+                cartItems.removeChild(cartItems.firstChild);
+                console.log(cartItems)
+            }  
+            updateTotal();
+            }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
