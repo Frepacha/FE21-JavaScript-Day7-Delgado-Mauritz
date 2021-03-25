@@ -48,6 +48,10 @@
                 <p class="product-title h3 m-3">Flower bunsch 1</p>
                 <img class="product-image" src="./Images/cherry.jpeg">
                 <div class="product-details ">
+                    <!--New stock product
+                     -->
+                    <p class="product-stock h4 m-3">Stock: <span class="stockQtt">5</span> </p>
+
                     <p class="product-price h4 m-3">€ 20.00</p>
                     <!--here firs button -->
                     <button class="btn btn-primary product-button" type="button">ADD TO CART</button>
@@ -152,6 +156,8 @@
         }
         documentReady();
 
+        //functions
+
         function addItem(e) {
             let item = e.target.parentElement.parentElement /* let item = e.target.childNodes; */
             console.log(item);
@@ -161,6 +167,7 @@
             console.log(title, price, picSrc);
             rowCreate(title, price, picSrc);
             updateTotal();
+            // stockChangeMinus(e);
         }
 
         function rowCreate(title, price, picSrc) {
@@ -194,13 +201,13 @@
             <div class="cart-quantity p-4 h4">1</div>            
             <i class="plus fa fa-plus-circle my-auto"></i>        
             <button class="del btn btn-danger rounded-circle  my-auto ms-3 fw-bold" type="button"> X </button>
-
-
         </div>
     </div>`;
+
             let cart = document.getElementById('cart-items'); // with this code we print the functions in ITEN-PRICE_QUANTITY
             cart.innerHTML += item;
             documentReady();
+            // updateTotal();
         }
 
         function updateTotal() {
