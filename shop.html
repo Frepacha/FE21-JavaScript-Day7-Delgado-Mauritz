@@ -170,7 +170,7 @@
             console.log(title, price, picSrc);
             rowCreate(title, price, picSrc);
             updateTotal();
-            // stockChangeMinus(e);
+            stockChangeMinus(e);
         }
 
         function rowCreate(title, price, picSrc) {
@@ -242,7 +242,7 @@
             let flowerTitles = document.getElementsByClassName("product");
             for (let j = 0; j < flowerTitles.length; j++){
                 flowerTitle = flowerTitles[j].querySelector(".product-title").innerText;
-                console.log(flowerTitle)
+                // console.log(flowerTitle)
             if(cardTitles == flowerTitle){
                 let qtt = flowerTitles[j].querySelector(".stock").innerText;
                 if(qtt == 0){
@@ -260,8 +260,21 @@
         }
 
         function minusQtt(m) {
-            let itemMinus = m.target.parentElement;
+            let itemMinus = m.target.parentElement.parentElement;
+            let cardTitles = itemMinus.querySelector(".cart-item-title").innerText;
+            let flowerTitles = document.getElementsByClassName("product");
             let qtt = Number(itemMinus.querySelector('.cart-quantity').innerHTML);
+            for (let k = 0; k < flowerTitles.length; k++){
+                flowerTitle = flowerTitles[k].querySelector(".product-title").innerText;
+                // console.log(flowerTitle);
+            if (cardTitles == flowerTitle){
+                let qtt = flowerTitles[k].querySelector(".stock").innerText;
+                qtt++;
+                // console.log(qtt);
+                documentReady();
+                flowerTitles[k].querySelector(".stock").innerText = qtt;
+            }
+            }
             if (qtt == 1) {
                 console.log("There shouldn't be 0 products in the cart");
                 delItem(m);
@@ -272,9 +285,27 @@
             }
         }
 
+function stockChangeMinus(e){
+    let stock = e.target.parentElement.parentElement.querySelector(".stock");
+    stock.innerText--;
+}
+
         function delItem(d) {
+            let cartItem = d.target.parentElement.parentElement;
+            let itemQtt = cartItem.querySelector(".cart-quantity").innerText;
+            let cartFlowerTitles = cartItem.querySelector(".cart-item-title").innerText;
+            let products = document.getElementsByClassName("product");
+            for (let z = 0; z < products.length; z++){
+                let product = products[z].querySelector(".product-title").innerText;
+                if (cartFlowerTitles == product){
+                    let qtt = products[z].querySelector(".stock").innerText;
+                    documentReady();
+                    products[z].querySelector(".stock").innerText = Number(itemQtt) + Number(qtt);
+                }
+            }
             let delBtnAction = d.target.parentElement.parentElement.remove();
             updateTotal();
+            documentReady();
         }
 
         function purchase() {
